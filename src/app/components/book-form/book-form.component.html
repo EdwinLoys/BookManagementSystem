@@ -1,0 +1,75 @@
+<div class="container">
+    <h2>{{ isEditMode ? 'Edit Book' : 'Add New Book' }}</h2>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+
+    <form (ngSubmit)="onSubmit()" #bookForm="ngForm">
+
+        <div class="form-group">
+            <label for="title">Title <span class="required">*</span></label>
+            <input id="title"
+                   name="title"
+                   type="text"
+                   [(ngModel)]="book.title"
+                   required
+                   maxlength="200"
+                   placeholder="Enter book title"
+                   #title="ngModel" />
+            <div *ngIf="title.invalid && title.touched" class="field-error">
+                Title is required.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="author">Author <span class="required">*</span></label>
+            <input id="author"
+                   name="author"
+                   type="text"
+                   [(ngModel)]="book.author"
+                   required
+                   maxlength="100"
+                   placeholder="Enter author name"
+                   #author="ngModel" />
+            <div *ngIf="author.invalid && author.touched" class="field-error">
+                Author is required.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="isbn">ISBN <span class="required">*</span></label>
+            <input id="isbn"
+                   name="isbn"
+                   type="text"
+                   [(ngModel)]="book.isbn"
+                   required
+                   pattern="^\d{3}-\d{10}$"
+                   placeholder="e.g. 978-0201633610"
+                   #isbn="ngModel" />
+            <div *ngIf="isbn.invalid && isbn.touched" class="field-error">
+                ISBN must be in format XXX-XXXXXXXXXX.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="publicationDate">Publication Date</label>
+            <input id="publicationDate"
+                   name="publicationDate"
+                   type="date"
+                   [(ngModel)]="book.publicationDate"
+                   placeholder="Select date" />
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary"
+                    [disabled]="bookForm.invalid">
+                {{ isEditMode ? 'Update Book' : 'Add Book' }}
+            </button>
+            <button type="button" class="btn btn-cancel"
+                    (click)="onCancel()">
+                Cancel
+            </button>
+        </div>
+
+    </form>
+</div>

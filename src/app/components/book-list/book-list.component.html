@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="header">
+        <h2>All Books</h2>
+        <a routerLink="/books/add" class="btn btn-primary">+ Add Book</a>
+    </div>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <div *ngIf="books.length === 0" class="empty">
+        No books found. Add your first book!
+    </div>
+
+    <table *ngIf="books.length > 0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Publication Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let book of books">
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.publicationDate | date:'mediumDate' }}</td>
+                <td>
+                    <button class="btn btn-edit" (click)="editBook(book.id)">Edit</button>
+                    <button class="btn btn-delete" (click)="deleteBook(book.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
